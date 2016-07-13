@@ -27,9 +27,9 @@
     "metal"
   ],
   "dependencies": {
-    "metal-incremental-dom": "^2.0.0",
-    "metal-jsx": "^2.0.0",
-    "metal-state": "^2.0.0"
+    "metal-incremental-dom": "^1.0.0",
+    "metal-jsx": "^1.0.0",
+    "metal-state": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
