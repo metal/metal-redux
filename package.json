@@ -21,7 +21,7 @@
     "test": "gulp test"
   },
   "babel": {
-    "presets": ["metal-jsx"]
+    "presets": ["metal", "metal-jsx"]
   },
   "keywords": [
     "metal"
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
+    "babel-preset-metal": "^4.0.0",
     "babel-preset-metal-jsx": "0.0.3",
     "gulp": "^3.8.11",
     "gulp-metal": "^1.0.0"
