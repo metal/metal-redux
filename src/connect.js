@@ -208,7 +208,13 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 					);
 				}
 
-				return <WrappedComponent {...this.getChildProps_()} />;
+				const childProps = this.getChildProps_();
+
+				return (
+					<WrappedComponent {...childProps}>
+						{childProps.children}
+					</WrappedComponent>
+				);
 			}
 
 			/**
