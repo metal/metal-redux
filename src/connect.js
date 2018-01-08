@@ -72,12 +72,15 @@ function connect(
 	const mapDispatchDependsOnProps = mapDispatchToProps.length !== 1;
 
 	return function(WrappedComponent) {
+		/**
+		 * Connect class.
+		 */
 		class Connect extends JSXComponent {
 			/**
 			 * @inheritDoc
 			 */
-			constructor(opt_props, opt_parentElement) {
-				super(opt_props, opt_parentElement);
+			constructor(props, parentElement) {
+				super(props, parentElement);
 				this.hasStorePropsChanged_ = false;
 				this.hasOwnPropsChanged_ = false;
 			}
@@ -213,6 +216,7 @@ function connect(
 
 			/**
 			 * Renders the wrapped component with the appropriate data.
+			 * @inheritDoc
 			 */
 			render() {
 				if (shouldSubscribe && !this.unsubscribeStore_) {

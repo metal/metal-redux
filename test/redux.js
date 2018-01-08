@@ -482,7 +482,7 @@ describe('connect', () => {
 		it('should call mapDispatchToProps when it depends on ownProps and they have changed', done => {
 			let callCount = 0;
 
-			const mapDispatchStub = (state, ownProps) => {
+			const mapDispatchStub = (state) => {
 				callCount++;
 				return state;
 			};
@@ -628,9 +628,9 @@ describe('Provider', () => {
 		assert.strictEqual(store, child.context.store);
 	});
 
-	function createTestComponentClass(opt_renderer) {
+	function createTestComponentClass(renderer) {
 		class TestComponent extends Component {}
-		TestComponent.RENDERER = opt_renderer || createIncrementalDomRenderer();
+		TestComponent.RENDERER = renderer || createIncrementalDomRenderer();
 		return TestComponent;
 	}
 

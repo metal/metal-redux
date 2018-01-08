@@ -1,6 +1,5 @@
 'use strict';
 
-import IncrementalDomRenderer from 'metal-incremental-dom';
 import JSXComponent from 'metal-jsx';
 
 /**
