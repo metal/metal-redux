@@ -14,7 +14,7 @@ class Provider extends JSXComponent {
 	 */
 	getChildContext() {
 		return {
-			store: this.props.store
+			store: this.props.store,
 		};
 	}
 
