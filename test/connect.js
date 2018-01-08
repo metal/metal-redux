@@ -55,6 +55,18 @@ describe('connect', () => {
 		assert.strictEqual('foo', child.props.foo);
 	});
 
+	it('should pass children props to the inner component', () => {
+		const TestComponent = connect()(OriginalComponent);
+		component = new TestComponent({
+			children: ['one', 'two'],
+			store: buildStoreStub()
+		});
+
+		const names = Object.keys(component.components);
+		const child = component.components[names[0]];
+		assert.strictEqual(child.props.children.length, 2);
+	});
+
 	describe('store', () => {
 		it('should return the store being used', () => {
 			const store = buildStoreStub();
