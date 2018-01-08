@@ -482,7 +482,8 @@ describe('connect', () => {
 		it('should call mapDispatchToProps when it depends on ownProps and they have changed', done => {
 			let callCount = 0;
 
-			const mapDispatchStub = (state) => {
+			// eslint-disable-next-line
+			const mapDispatchStub = (state, ownProps) => {
 				callCount++;
 				return state;
 			};
