@@ -58,6 +58,7 @@
     "karma-webpack": "^2.0.6",
     "mocha": "^4.1.0",
     "prettier-eslint-cli": "^4.7.0",
-    "sinon": "^4.1.4"
+    "sinon": "^4.1.4",
+    "webpack": "^3.10.0"
   }
 }
