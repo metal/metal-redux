@@ -1,6 +1,5 @@
 'use strict';
 
-import IncrementalDomRenderer from 'metal-incremental-dom';
 import JSXComponent from 'metal-jsx';
 
 /**
@@ -14,7 +13,7 @@ class Provider extends JSXComponent {
 	 */
 	getChildContext() {
 		return {
-			store: this.props.store
+			store: this.props.store,
 		};
 	}
 

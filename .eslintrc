@@ -1,0 +1,21 @@
+{
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"extends": "liferay",
+	"globals": {
+		"IncrementalDOM": true
+	},
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"plugins": [
+		"react"
+	],
+	"rules": {
+		"react/jsx-uses-vars": 2
+	}
+}

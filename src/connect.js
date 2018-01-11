@@ -1,21 +1,19 @@
 'use strict';
 
-import { core, object } from 'metal';
+import {core, object} from 'metal';
 import JSXComponent from 'metal-jsx';
 
 const defaultMapStateToProps = () => ({});
 const defaultMapDispatchToProps = dispatch => ({
-	dispatch
+	dispatch,
 });
 const defaultMergeProps = (...props) => object.mixin({}, ...props);
 const wrapActionCreators = actionCreators => {
-	return dispatch => Object.keys(actionCreators).reduce(
-		(props, key) => {
+	return dispatch =>
+		Object.keys(actionCreators).reduce((props, key) => {
 			props[key] = (...args) => dispatch(actionCreators[key](...args));
 			return props;
-		},
-		{}
-	);
+		}, {});
 };
 
 /**
@@ -52,7 +50,12 @@ const wrapActionCreators = actionCreators => {
  *     component constructor, and returns another component constructor that
  *     wraps it, adding to it the helper behaviors provided by this module.
  */
-function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options = {}) {
+function connect(
+	mapStoreStateToProps,
+	mapDispatchToProps,
+	mergeProps,
+	options = {}
+) {
 	const shouldSubscribe = !!mapStoreStateToProps;
 	mapStoreStateToProps = mapStoreStateToProps || defaultMapStateToProps;
 	mergeProps = mergeProps || defaultMergeProps;
@@ -69,12 +72,15 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 	const mapDispatchDependsOnProps = mapDispatchToProps.length !== 1;
 
 	return function(WrappedComponent) {
+		/**
+		 * Connect class.
+		 */
 		class Connect extends JSXComponent {
 			/**
 			 * @inheritDoc
 			 */
-			constructor(opt_props, opt_parentElement) {
-				super(opt_props, opt_parentElement);
+			constructor(props, parentElement) {
+				super(props, parentElement);
 				this.hasStorePropsChanged_ = false;
 				this.hasOwnPropsChanged_ = false;
 			}
@@ -105,7 +111,7 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 						this.getDispatchProps_()
 					),
 					{
-						ref: 'child'
+						ref: 'child',
 					}
 				);
 			}
@@ -117,8 +123,10 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 			 * @protected
 			 */
 			getDispatchProps_() {
-				if (!this.dispatchProps_ ||
-					(mapDispatchDependsOnProps && this.hasOwnPropsChanged_)) {
+				if (
+					!this.dispatchProps_ ||
+					(mapDispatchDependsOnProps && this.hasOwnPropsChanged_)
+				) {
 					this.dispatchProps_ = mapDispatchToProps(
 						this.getStore().dispatch,
 						this.props
@@ -136,8 +144,8 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 				if (!store) {
 					throw new Error(
 						'Could not find "store" either in "context" or "props". Either ' +
-						'pass your component inside "Provider" or explicitly pass the ' +
-						'store via props to this component.'
+							'pass your component inside "Provider" or explicitly pass the ' +
+							'store via props to this component.'
 					);
 				}
 				return store;
@@ -152,9 +160,11 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 			 */
 			getStoreProps_(storeState) {
 				let {storeProps_} = this;
-				if (!storeProps_ ||
+				if (
+					!storeProps_ ||
 					storeState !== this.state.storeState ||
-					(mapStateDependsOnProps && this.hasOwnPropsChanged_)) {
+					(mapStateDependsOnProps && this.hasOwnPropsChanged_)
+				) {
 					storeProps_ = mapStoreStateToProps(storeState, this.props);
 				}
 				return storeProps_;
@@ -179,7 +189,10 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 				const {storeProps_} = this;
 				const newStoreProps = this.getStoreProps_(storeState);
 
-				if (newStoreProps && !object.shallowEqual(storeProps_, newStoreProps)) {
+				if (
+					newStoreProps &&
+					!object.shallowEqual(storeProps_, newStoreProps)
+				) {
 					this.hasStorePropsChanged_ = true;
 					this.storeProps_ = newStoreProps;
 				}
@@ -194,12 +207,16 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 			 */
 			propsChanged(prevVal) {
 				if (pure) {
-					this.hasOwnPropsChanged_ = !object.shallowEqual(prevVal, this.props);
+					this.hasOwnPropsChanged_ = !object.shallowEqual(
+						prevVal,
+						this.props
+					);
 				}
 			}
 
 			/**
 			 * Renders the wrapped component with the appropriate data.
+			 * @inheritDoc
 			 */
 			render() {
 				if (shouldSubscribe && !this.unsubscribeStore_) {
@@ -231,15 +248,19 @@ function connect(mapStoreStateToProps, mapDispatchToProps, mergeProps, options =
 			 * @return {boolean}
 			 */
 			shouldUpdate() {
-				return !pure || this.hasStorePropsChanged_ || this.hasOwnPropsChanged_;
+				return (
+					!pure ||
+					this.hasStorePropsChanged_ ||
+					this.hasOwnPropsChanged_
+				);
 			}
 		}
 		Connect.STATE = {
 			storeState: {
 				valueFn: function() {
 					return this.getStore().getState();
-				}
-			}
+				},
+			},
 		};
 		return Connect;
 	};
